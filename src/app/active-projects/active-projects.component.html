@@ -1,0 +1,66 @@
+<div class="project-container">
+  
+  <div class="project-tab">
+    <h1>
+      Project Assignment
+    </h1>
+    <form [formGroup]="projectForm">
+      <mat-form-field appearance="fill">
+        <mat-label>Select a project</mat-label>
+        <mat-select (selectionChange)="selectEvent($event.value)" formControlName="projectName">
+          <mat-option *ngFor="let project of projects" [value]="[project.projectDescription, project.estimateTime, project.employees, project.projectId]"> {{ project.projectName }} </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <mat-label>Project Description</mat-label>
+        <textarea matInput formControlName="projectDescription"> </textarea>
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <mat-label>Estimated Time (Hours)</mat-label>
+        <input matInput formControlName="estimatedTime">
+      </mat-form-field>
+    </form>
+  </div>
+
+  <div class="employee-tab">
+    <h1>
+      Assigned Employees
+    </h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Employee</th>
+          <th>Estimated Time</th>
+          <th>Actual Time</th>
+          <th colspan="2">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="employees.length == 0">
+          <td>empty</td>
+          <td>empty</td>
+          <td>empty</td>
+          <td class="icon-button">
+            <mat-icon (click)="addEmployeeToProject()">add</mat-icon>
+          </td>
+          <td>
+            <mat-icon class="icon-button">delete</mat-icon>
+          </td>
+        </tr>
+        <tr *ngFor="let employee of employees"> 
+          <td>{{ employee.employeeName }}</td>
+          <td>{{ employee.estimateTime }}</td>
+          <td>{{ employee.actualTime }}</td>
+          <td class="icon-button">
+            <mat-icon (click)="addEmployeeToProject()">add</mat-icon>
+          </td>
+          <td class="icon-button">
+            <mat-icon (click)="removeEmployeeFromProject(employee.employeeId)">delete</mat-icon>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <button mat-raised-button color="primary">debug</button>
+  </div>
+</div>
